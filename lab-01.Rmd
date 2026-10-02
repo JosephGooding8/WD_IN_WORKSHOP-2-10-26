@@ -168,11 +168,11 @@ visitors %>%
 _Perform the same calculation for the 2021 admissions data._
 
 ```{r Ex_h}
-#visitors %>% 
-#  ______(
-#    __________,
-#    __________
-#  )
+visitors %>% 
+  summarise(
+    mean_2021 = mean(n_2021),
+    med_2022 = median(n_2021)
+  )
 ```
 
 All values in the output are `NA`!
@@ -181,8 +181,7 @@ All values in the output are `NA`!
 
 _What does `NA` stand for and why are you getting this as your answer to the previous question._
 
-**Write your answer here**
-
+Not available, we get this because not all of the data input is numerical, clearly some is NA 
 
 
 
@@ -190,7 +189,11 @@ _What does `NA` stand for and why are you getting this as your answer to the pre
 
 _Look at the help pages for the `mean()` and `median()` commands to see what the input argument `na.rm` does. Edit your code from exercise h so that it computes the summary statistics where data is available._
 
-**Write your answer here**
+visitors %>% 
+  summarise(
+    mean_2021 = mean(n_2021, na.rm = TRUE),
+    med_2022 = median(n_2021, na.rm = TRUE), 
+  )
 
 
 
@@ -205,25 +208,28 @@ visitors %>%
   summarise(
     mean_2022 = mean(n_2022),
     med_2022 = median(n_2022)
-  )
+  ) %>%
+  arrange(desc(mean_2022))
 ```
 
 ### Exercise k.
 
 _Observe in question 6 that the mean statistics across all settings are much larger than the corresponding median statistics. Discuss in your group what this suggests about the data._
 
-**Write your answer here**
+A few very high visitor counts are pulling the mean up, but most are
 
 ## Question 8
 
 ### Exercise l.
 
 ```{r Q8}
-#visitors %>% 
-#  summarise(
-#     __________,
-#     __________,
-#  )
+visitors %>% 
+  arrange(desc(
+   n_2021
+  )
+  )
+visitors %>%
+  arrange(n_2021)
 ```
 
 ## Question 9
@@ -254,8 +260,15 @@ _How many tourist attractions are there in each of the 4 nations? From this, dis
 
 
 ```{r Ex_l}
-#________ %>%
-#  ______(_______)
+
+
+visitors_with_nations %>%
+  group_by(nation) %>%
+  summarise(number_of_attractions = n())
+ 
+  #N counts how many observations fall into each group (nation) 
+  # And 'number_of_attractions' gives us a label for this n
+            
 ```
 
 
